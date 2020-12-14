@@ -179,6 +179,7 @@ class Airplane {
     this.favSubjects = attrs.favSubjects;
     this.grade = attrs.grade;
   }
+  
   listSubjects() {
     return `Loving ${this.favSubjects.join(", ")}`;
   }
