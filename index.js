@@ -43,7 +43,23 @@ class Airplane {
   
  class Person {
     
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+    this.stomach = [];
   }
+  eat(edible) {
+    if (this.stomach.length < 10) {
+      this.stomach.push(edible);
+    }
+  }
+  poop() {
+    this.stomach = [];
+  }
+  toString() {
+    return `${this.name}, ${this.age}`;
+  }
+}
   
   /*
     TASK 2
@@ -61,7 +77,27 @@ class Airplane {
   
  class Car {
     
+  constructor(model, milesPerGallon) {
+    this.model = model;
+    this.milesPerGallon = milesPerGallon;
+    this.tank = 0;
+    this.odometer = 0;
   }
+  fill(gallons) {
+    this.tank += gallons;
+  }
+  drive(distance) {
+    let maxD = this.milesPerGallon * this.tank
+    if (maxD <= distance) {
+    distance = maxD;
+    } 
+    this.odometer += distance;
+    this.tank -= distance/this.milesPerGallon;
+    if (this.tank === 0) {
+      return `I ran out of fuel at ${this.odometer} miles!`;
+    }
+  }
+}
   
   /*
     TASK 3
@@ -76,9 +112,19 @@ class Airplane {
           + {name} and {location} of course come from the instance's own properties.
   */
  class Lambdasian {
-    
+  constructor(attrs) {
+    this.name = attrs.name;
+    this.age = attrs.age;
+    this.location = attrs.location;
   }
+  speak() {
+    return `Hello my name is ${this.name}, I am from ${this.location}`;
+  }
+}
   
+
+
+
   /*
     TASK 4
       - Write an Instructor class extending Lambdasian.
@@ -94,9 +140,23 @@ class Airplane {
           + `grade` receives a `student` object and a `subject` string as arguments and returns '{student.name} receives a perfect score on {subject}'
   */
  class Instructor {
-
+  constructor(attrs) {
+    super(attrs);
+    this.specialty = attrs.specialty;
+    this.favLanguage = attrs.favLanguage;
+    this.catchPhrase = attrs.catchPhrase;
+  }
+  demo(subject) {
+    return `Today we are learning about ${subject}`;
+  }
+  grade(student, subject) {
+    return `${student.name} receives a perfect score on ${subject}`;
+  }
  }
-  /*
+
+
+ 
+ /*
     TASK 5
       - Write a Student class extending Lambdasian.
       - Its constructor takes a single argument -  an object with the following keys:
@@ -112,9 +172,26 @@ class Airplane {
           + `sprintChallenge` similar to PRAssignment but returns `student.name has begun sprint challenge on {subject}`
   */
  class Student {
-     
+  constructor(attrs) {
+    super(attrs);
+    this.previousBackground = attrs.previousBackground;
+    this.className = attrs.className;
+    this.favSubjects = attrs.favSubjects;
+    this.grade = attrs.grade;
+  }
+  
+  listSubjects() {
+    return `Loving ${this.favSubjects.join(", ")}`;
+  }
+  PRAssignment(subject) {
+    return `${this.name} has submitted a PR for ${subject}`;
+  }
+  sprintChallenge(subject) {
+    return `${this.name} has begun sprint challenge on ${subject}`;
+  } 
  }
   
+
   /*
     TASK 6
       - Write a ProjectManager class extending Instructor.
@@ -129,9 +206,22 @@ class Airplane {
           + `debugsCode` a method that takes in a student object and a subject and returns `{name} debugs {student.name}'s code on {subject}`
   */
  class ProjectManager {
-     
- }
-  /*
+     constructor(attrs) {
+    super(attrs);
+    this.gradClassName = attrs.gradClassName;
+    this.favInstructor = attrs.favInstructor;
+  }
+  standUp(slackChannel) {
+    return `${this.name} announces to ${slackChannel}, @channel standy times!`;
+  }
+  debugsCode(student, subject) {
+    return `${this.name} debugs ${student.name}'s code on ${subject}`
+  }
+}
+ 
+
+
+/*
     STRETCH PROBLEM (no tests!)
       - Extend the functionality of the Student by adding a prop called grade and setting it equal to a number between 1-100.
       - Now that our students have a grade build out a method on the Instructor (this will be used by _BOTH_ instructors and PM's) that will randomly add or subtract points to a student's grade. _Math.random_ will help.
